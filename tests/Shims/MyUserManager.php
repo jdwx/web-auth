@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\tests\Shims;
+namespace Shims;
 
 
 use JDWX\Web\Login\AbstractUserManager;
@@ -19,18 +19,23 @@ class MyUserManager extends AbstractUserManager {
     }
 
 
-    public function getCredentialsByToken( string $stToken ) : ?CredentialsInterface {
+    public function resume( string $i_stToken ) : ?CredentialsInterface {
         return null;
     }
 
 
-    public function newCredentialsByAuth( string  $i_stUserId, string $i_stPassword,
-                                          ?string $i_nstOther = null ) : ?CredentialsInterface {
-        return null;
+    public function logIn( string  $i_stUserId,
+                           array $i_rAuthData = [] ) : CredentialsInterface|string {
+        return 'Login incorrect.';
     }
 
 
-    public function invalidateToken( string $stToken ) : void {
+    public function logOut( string $i_stToken ) : void {
+    }
+
+
+    public function signUp( string $i_stUserId, array $i_rSignUpData = [] ) : string|CredentialsInterface {
+        return 'Not implemented.';
     }
 
 

@@ -7,26 +7,30 @@ declare( strict_types = 1 );
 namespace JDWX\Web\Login;
 
 
+use ArrayAccess;
 use JDWX\Json\Json;
+use JsonSerializable;
+use PDO;
+use PDOStatement;
 
 
-class KV implements \ArrayAccess {
+class KV implements ArrayAccess {
 
 
-    private \PDO $pdo;
+    private PDO $pdo;
 
-    private \PDOStatement $stmtExists;
+    private PDOStatement $stmtExists;
 
-    private \PDOStatement $stmtGet;
+    private PDOStatement $stmtGet;
 
-    private \PDOStatement $stmtSet;
+    private PDOStatement $stmtSet;
 
-    private \PDOStatement $stmtDelete;
+    private PDOStatement $stmtDelete;
 
 
     public function __construct( string $i_stPath ) {
-        $this->pdo = new \PDO( "sqlite:{$i_stPath}" );
-        $this->pdo->setAttribute( \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION );
+        $this->pdo = new PDO( "sqlite:{$i_stPath}" );
+        $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         $this->pdo->exec( 'CREATE TABLE IF NOT EXISTS kv (
             key TEXT PRIMARY KEY, 
             value TEXT, 
@@ -48,21 +52,23 @@ class KV implements \ArrayAccess {
     }
 
 
-    public function offsetGet( $offset ) : ?string|\JsonSerializable {
+    public function offsetGet( $offset ) : string|int|float|bool|array|null {
         $this->stmtGet->execute( [ ':key' => $offset ] );
-        $row = $this->stmtGet->fetch( \PDO::FETCH_ASSOC );
+        $row = $this->stmtGet->fetch( PDO::FETCH_ASSOC );
         if ( $row === false ) {
             return null;
         }
+        $x = $row[ 'value' ];
         if ( $row[ 'is_json' ] ) {
-            return Json::decode( $row[ 'value' ], true );
+            $x = Json::decode( $x );
         }
+        return $x;
     }
 
 
     /**
-     * @param string $offset
-     * @param string|\JsonSerializable $value
+     * @param string                  $offset
+     * @param string|JsonSerializable $value
      */
     public function offsetSet( $offset, $value ) : void {
         if ( ! is_string( $value ) ) {
@@ -71,7 +77,7 @@ class KV implements \ArrayAccess {
         } else {
             $uIsJson = 0;
         }
-        $this->stmtSet->execute( [ ':key' => $offset, ':value' => $value ] );
+        $this->stmtSet->execute( [ ':key' => $offset, ':value' => $value, ':is_json' => $uIsJson ] );
     }
 
 

@@ -9,7 +9,7 @@ namespace JDWX\Web\tests;
 
 use JDWX\Web\Login\AbstractUserManager;
 use JDWX\Web\Login\UserManagerInterface;
-use JDWX\Web\tests\Shims\MyUserManager;
+use Shims\MyUserManager;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
