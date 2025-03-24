@@ -1,6 +1,8 @@
 body {
     background-color: white;
     color: black;
+    font-family: sans-serif;
+    font-size: 14pt;
     margin: 0;
     padding: 0;
 }
@@ -10,8 +12,7 @@ nav {
     color: white;
     display: flex;
     flex-direction: row;
-    font-size: 125%;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 5px;
 }
 
@@ -21,4 +22,14 @@ a:link, a:visited {
 
 h1 {
     padding-left: 10px;
+}
+
+label {
+    display: inline-block;
+    text-align: right;
+    width: 15em;
+}
+
+main {
+    padding: 10px;
 }

@@ -13,13 +13,34 @@ use JDWX\Web\Framework\AbstractRoute;
 class AuthRoute extends AbstractRoute {
 
 
+    private static ?UserManagerInterface $manager = null;
+
+
+    public static function setManager( UserManagerInterface $i_manager ) : void {
+        if ( ! is_null( self::$manager ) ) {
+            throw new \LogicException( 'UserManager already set' );
+        }
+        self::$manager = $i_manager;
+    }
+
+
     protected function allowAccess( string $i_stMethod, string $i_stUri, string $i_stPath ) : bool {
-        return $this->credentials()->allowAccess( $i_stMethod, $i_stUri, $i_stPath );
+        return $this->credentials()->aaa( $i_stMethod, $i_stUri, $i_stPath );
     }
 
 
     protected function credentials() : ?CredentialsInterface {
         return null;
+    }
+
+
+    protected function isAdmin() : bool {
+        return $this->credentials()?->isAdmin() ?? false;
+    }
+
+
+    protected function isAdminOrHigher() : bool {
+        return $this->credentials()?->isAdminOrHigher() ?? false;
     }
 
 
@@ -43,13 +64,8 @@ class AuthRoute extends AbstractRoute {
     }
 
 
-    protected function isAdmin() : bool {
-        return $this->credentials()?->isAdmin() ?? false;
-    }
-
-
-    protected function isAdminOrHigher() : bool {
-        return $this->credentials()?->isAdminOrHigher() ?? false;
+    protected function manager() : UserManagerInterface {
+        return self::$manager;
     }
 
 

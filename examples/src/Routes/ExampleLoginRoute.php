@@ -17,7 +17,9 @@ class ExampleLoginRoute extends LoginRoute {
 
 
     protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
-        return Response::page( new ExampleHtmlPage( 'Login' ) );
+        $page = new ExampleHtmlPage( 'Login' );
+        $page->addContent( "This is the login page." );
+        return Response::page( $page );
     }
 
 

@@ -16,11 +16,21 @@ class DummyUserManager extends AbstractUserManager {
     private array $rUsers = [];
 
 
+    public function __construct( private readonly string $stStorageDir ) {
+        // Do nothing.
+    }
+
+
     public function addUser( string $i_stUserId, string $i_stPassword, int $i_uLevel ) : void {
         $x = new stdClass();
         $x->stPassword = $i_stPassword;
         $x->uLevel = $i_uLevel;
         $this->rUsers[ $i_stUserId ] = $x;
+    }
+
+
+    public function invalidateToken( string $stToken ) : void {
+        // Do nothing.
     }
 
 
@@ -33,11 +43,6 @@ class DummyUserManager extends AbstractUserManager {
             return null;
         }
 
-    }
-
-
-    public function invalidateToken( string $stToken ) : void {
-        // Do nothing.
     }
 
 

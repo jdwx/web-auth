@@ -20,20 +20,28 @@ class ExampleHtmlPage extends SimpleHtmlPage {
     ];
 
 
-    public function __construct( string $stWhich ) {
+    public function __construct( private readonly string $stWhich ) {
         parent::__construct();
         $this->setTitle( "Example Page - {$stWhich}" );
-        $this->addContent( '<nav>' );
-        foreach ( self::ROUTES as $stName => $stRoute ) {
-            if ( $stName === $stWhich ) {
-                $this->addContent( "<b>{$stName}</b> " );
-                continue;
-            }
-            $this->addContent( "<a href=\"{$stRoute}\">{$stName}</a> " );
-        }
-        $this->addContent( "</nav><hr><h1>{$stWhich} Page</h1><hr>" );
         $this->addCSS( '/css/example.css' );
     }
 
+
+    protected function prefix() : string {
+        $st = '<nav>';
+        foreach ( self::ROUTES as $stName => $stRoute ) {
+            if ( $stName === $this->stWhich ) {
+                $st .= "<b>{$stName}</b> ";
+                continue;
+            }
+            $st .= "<a href=\"{$stRoute}\">{$stName}</a> ";
+        }
+        $st .= "</nav><hr><h1>{$this->stWhich} Page</h1><hr><main>";
+        return $st;
+    }
+
+    protected function suffix() : string {
+        return '</main>';
+    }
 
 }

@@ -14,19 +14,17 @@ class DummyCredentials extends AbstractCredentials {
 
     public const int LEVEL_PUBLIC = 1;
 
-    public const int LEVEL_USER = 2;
+    public const int LEVEL_USER   = 2;
 
-    public const int LEVEL_ADMIN = 3;
+    public const int LEVEL_ADMIN  = 3;
 
 
     public function __construct( private readonly ?string $nstUserId = null,
                                  private readonly ?string $nstToken = null,
-                                 private readonly int     $uLevel = self::LEVEL_PUBLIC ) {
-
-    }
+                                 private readonly int     $uLevel = self::LEVEL_PUBLIC ) {}
 
 
-    public function allowAccess( string $i_stMethod, string $i_stUri ) : bool {
+    public function aaa( string $i_stMethod, string $i_stUri ) : bool {
         return true;
     }
 
@@ -46,6 +44,11 @@ class DummyCredentials extends AbstractCredentials {
     }
 
 
+    public function isAdmin() : bool {
+        return $this->uLevel === self::LEVEL_ADMIN;
+    }
+
+
     public function isBanned() : bool {
         return $this->uLevel === self::LEVEL_BANNED;
     }
@@ -58,11 +61,6 @@ class DummyCredentials extends AbstractCredentials {
 
     public function isUser() : bool {
         return $this->uLevel === self::LEVEL_USER;
-    }
-
-
-    public function isAdmin() : bool {
-        return $this->uLevel === self::LEVEL_ADMIN;
     }
 
 

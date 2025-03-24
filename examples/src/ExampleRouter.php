@@ -5,6 +5,8 @@ declare( strict_types = 1 );
 
 
 use JDWX\Web\Framework\Router;
+use JDWX\Web\Login\AuthRoute;
+use JDWX\Web\Login\DummyUserManager;
 use Routes\ExampleAdminRoute;
 use Routes\ExampleApiRoute;
 use Routes\ExampleLoginRoute;
@@ -18,6 +20,7 @@ class ExampleRouter extends Router {
 
     public function __construct() {
         parent::__construct();
+        AuthRoute::setManager( new DummyUserManager() );
         $this->addRoute( '/', ExamplePublicRoute::class );
         $this->addRoute( '/admin', ExampleAdminRoute::class );
         $this->addRoute( '/api', ExampleApiRoute::class );

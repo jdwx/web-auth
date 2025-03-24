@@ -7,10 +7,7 @@ declare( strict_types = 1 );
 namespace JDWX\Web\Login;
 
 
-use JDWX\Web\Framework\AbstractRoute;
-
-
-class SignupRoute extends AbstractRoute {
+class SignupRoute extends AuthRoute {
 
 
 }
