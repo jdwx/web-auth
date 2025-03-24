@@ -1,0 +1,17 @@
+{
+  "name": "jdwx/web-login",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "JDWX\\Web\\Login\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=8.3.0",
+    "jdwx/web": "^2.0.5"
+  },
+  "require-dev": {
+    "jetbrains/phpstorm-attributes": "^1.0",
+    "phpunit/phpunit": "^10"
+  }
+}
