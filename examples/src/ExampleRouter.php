@@ -4,6 +4,7 @@
 declare( strict_types = 1 );
 
 
+use JDWX\KV\SqliteKV;
 use JDWX\Web\Framework\Router;
 use JDWX\Web\Login\AuthRoute;
 use JDWX\Web\Login\DummyUserManager;
@@ -20,7 +21,8 @@ class ExampleRouter extends Router {
 
     public function __construct() {
         parent::__construct();
-        AuthRoute::setManager( new DummyUserManager() );
+        $kv = new SqliteKV( __DIR__ . '/../tmp/example.tmp' );
+        AuthRoute::setManager( new DummyUserManager( $kv ) );
         $this->addRoute( '/', ExamplePublicRoute::class );
         $this->addRoute( '/admin', ExampleAdminRoute::class );
         $this->addRoute( '/api', ExampleApiRoute::class );

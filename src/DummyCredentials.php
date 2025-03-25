@@ -24,7 +24,7 @@ class DummyCredentials extends AbstractCredentials {
                                  private readonly int     $uLevel = self::LEVEL_PUBLIC ) {}
 
 
-    public function aaa( string $i_stMethod, string $i_stUri ) : bool {
+    public function aaa( string $i_stMethod, string $i_stUri, string $i_stPath ) : string|true {
         return true;
     }
 

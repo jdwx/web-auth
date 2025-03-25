@@ -19,22 +19,21 @@ class MyUserManager extends AbstractUserManager {
     }
 
 
+    public function logIn( string $i_stUserId,
+                           array  $i_rAuthData = [] ) : CredentialsInterface|string {
+        return 'Login incorrect.';
+    }
+
+
+    public function logOut( string $i_stToken ) : void {}
+
+
     public function resume( string $i_stToken ) : ?CredentialsInterface {
         return null;
     }
 
 
-    public function logIn( string  $i_stUserId,
-                           array $i_rAuthData = [] ) : CredentialsInterface|string {
-        return 'Login incorrect.';
-    }
-
-
-    public function logOut( string $i_stToken ) : void {
-    }
-
-
-    public function signUp( string $i_stUserId, array $i_rSignUpData = [] ) : string|CredentialsInterface {
+    public function signUp( string $i_stUserId, array $i_rSignUpData = [] ) : true|string {
         return 'Not implemented.';
     }
 

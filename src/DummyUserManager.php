@@ -7,42 +7,86 @@ declare( strict_types = 1 );
 namespace JDWX\Web\Login;
 
 
-use stdClass;
+use ArrayAccess;
 
 
 class DummyUserManager extends AbstractUserManager {
 
 
-    private array $rUsers = [];
+    private const int TOKEN_LIFETIME = 60;
 
 
-    public function __construct( private readonly string $stStorageDir ) {
-        // Do nothing.
-    }
+    /** @param ArrayAccess<string, mixed> $kv */
+    public function __construct( private ArrayAccess $kv ) {}
 
 
     public function addUser( string $i_stUserId, string $i_stPassword, int $i_uLevel ) : void {
-        $x = new stdClass();
-        $x->stPassword = $i_stPassword;
-        $x->uLevel = $i_uLevel;
-        $this->rUsers[ $i_stUserId ] = $x;
+        $stUserKey = "user:{$i_stUserId}";
+        if ( isset( $this->kv[ $stUserKey ] ) ) {
+            throw new \LogicException( "User already exists: {$i_stUserId}" );
+        }
+        $stPasswordHash = password_hash( $i_stPassword, PASSWORD_DEFAULT );
+        $this->kv[ $stUserKey ] = [
+            'passwordHash' => $stPasswordHash,
+            'level' => $i_uLevel,
+        ];
     }
 
 
-    public function invalidateToken( string $stToken ) : void {
-        // Do nothing.
+    public function logIn( string $i_stUserId, array $i_rAuthData = [] ) : string|CredentialsInterface {
+        $stUserKey = "user:{$i_stUserId}";
+        if ( ! isset( $this->kv[ $stUserKey ] ) ) {
+            return 'User not found';
+        }
+        if ( ! isset( $i_rAuthData[ 'password' ] ) ) {
+            return 'Password required';
+        }
+        $r = $this->kv[ $stUserKey ];
+        if ( ! password_verify( $i_rAuthData[ 'password' ], $r[ 'passwordHash' ] ) ) {
+            return 'Invalid password';
+        }
+        $stToken = self::newToken();
+        $stTokenKey = "token:{$stToken}";
+        $this->kv[ $stTokenKey ] = [
+            'userId' => $i_stUserId,
+            'expires' => time() + self::TOKEN_LIFETIME,
+        ];
+        return $this->resume( $stToken ) ?? 'An error occurred';
     }
 
 
-    public function newCredentialsByAuth( string  $i_stUserId, string $i_stPassword,
-                                          ?string $i_nstOther = null ) : ?CredentialsInterface {
-        if ( ! isset( $this->rUsers[ $i_stUserId ] ) ) {
-            return null;
-        }
-        if ( $i_stPassword !== $this->rUsers[ $i_stUserId ] ) {
-            return null;
-        }
+    public function logOut( string $i_stToken ) : void {
+        $stTokenKey = "token:{$i_stToken}";
+        unset( $this->kv[ $stTokenKey ] );
+    }
 
+
+    public function resume( string $i_stToken ) : ?CredentialsInterface {
+        $stTokenKey = "token:{$i_stToken}";
+        if ( ! isset( $this->kv[ $stTokenKey ] ) ) {
+            return null;
+        }
+        $r = $this->kv[ $stTokenKey ];
+        if ( $r[ 'expires' ] < time() ) {
+            unset( $this->kv[ $stTokenKey ] );
+            return null;
+        }
+        $stUserKey = "user:{$r[ 'userId' ]}";
+        return new DummyCredentials( $stUserKey, $i_stToken, $r[ 'level' ] );
+    }
+
+
+    public function signUp( string $i_stUserId, array $i_rSignUpData = [] ) : true|string {
+        $stUserKey = "user:{$i_stUserId}";
+        if ( isset( $this->kv[ $stUserKey ] ) ) {
+            return 'User already exists';
+        }
+        if ( ! isset( $i_rSignUpData[ 'password' ] ) ) {
+            return 'Password required';
+        }
+        $uLevel = $i_rSignUpData[ 'level' ] ?? DummyCredentials::LEVEL_USER;
+        $this->addUser( $i_stUserId, $i_rSignUpData[ 'password' ], $uLevel );
+        return true;
     }
 
 

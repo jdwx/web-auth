@@ -18,7 +18,7 @@ class UserRoute extends AuthRoute {
         if ( ! $this->isUserOrHigher() ) {
             throw new ForbiddenException();
         }
-        if ( ! $this->allowAccess( $this->method(), $i_stUri, $i_stPath ) ) {
+        if ( ! $this->aaa( $this->method(), $i_stUri, $i_stPath ) ) {
             throw new ForbiddenException();
         }
         return parent::handle( $i_stUri, $i_stPath );

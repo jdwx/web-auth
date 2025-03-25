@@ -55,13 +55,19 @@ class ExampleSignupRoute extends SignupRoute {
 
 
     protected function handlePOST( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
-        $this->stUsername = $this->request()->POST( 'username' )->asString();
+        $this->stUsername = $this->request()->postEx( 'username' )->asString();
         $rAuthData = [
-            'password' => $this->request()->POST( 'password' )->asString(),
+            'password' => $this->request()->postEx( 'password' )->asString(),
         ];
-        $this->manager()->signup( $this->stUsername, $rAuthData );
-        $this->nstError = "Not implemented.";
-        return $this->handleGET( $i_stUri, $i_stPath );
+        $bst = $this->managerEx()->signUp( $this->stUsername, $rAuthData );
+        if ( is_string( $bst ) ) {
+            $this->nstError = $bst;
+            return $this->handleGET( $i_stUri, $i_stPath );
+        }
+
+        $page = new ExampleHtmlPage( 'Signup' );
+        $page->addContent( 'Signup successful.' );
+        return Response::page( $page );
     }
 
 

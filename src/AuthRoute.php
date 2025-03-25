@@ -15,6 +15,8 @@ class AuthRoute extends AbstractRoute {
 
     private static ?UserManagerInterface $manager = null;
 
+    private ?string $nstToken = null;
+
 
     public static function setManager( UserManagerInterface $i_manager ) : void {
         if ( ! is_null( self::$manager ) ) {
@@ -24,13 +26,25 @@ class AuthRoute extends AbstractRoute {
     }
 
 
-    protected function allowAccess( string $i_stMethod, string $i_stUri, string $i_stPath ) : bool {
-        return $this->credentials()->aaa( $i_stMethod, $i_stUri, $i_stPath );
+    protected function aaa( string $i_stMethod, string $i_stUri, string $i_stPath ) : true|string {
+        return $this->credentialsEx()->aaa( $i_stMethod, $i_stUri, $i_stPath );
     }
 
 
     protected function credentials() : ?CredentialsInterface {
-        return null;
+        if ( is_null( $this->nstToken ) ) {
+            return null;
+        }
+        return $this->managerEx()->resume( $this->nstToken );
+    }
+
+
+    protected function credentialsEx() : CredentialsInterface {
+        $cred = $this->credentials();
+        if ( ! is_null( $cred ) ) {
+            return $cred;
+        }
+        throw new \RuntimeException( 'Required credentials not present' );
     }
 
 
@@ -64,8 +78,22 @@ class AuthRoute extends AbstractRoute {
     }
 
 
-    protected function manager() : UserManagerInterface {
+    protected function manager() : ?UserManagerInterface {
         return self::$manager;
+    }
+
+
+    protected function managerEx() : UserManagerInterface {
+        $mgr = $this->manager();
+        if ( $mgr instanceof UserManagerInterface ) {
+            return $mgr;
+        }
+        throw new \RuntimeException( 'Required UserManager interface not present' );
+    }
+
+
+    protected function setToken( string $i_stToken ) : void {
+        $this->nstToken = $i_stToken;
     }
 
 

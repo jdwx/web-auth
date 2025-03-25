@@ -46,11 +46,10 @@ interface UserManagerInterface {
 
     /**
      * @param array<string, mixed> $i_rSignUpData Any other data needed for sign up. (E.g., email address.)
-     * @return string|CredentialsInterface CredentialsInterface on success, string with an error
-     *                                     message on failure.
+     * @return true|string True on success, string with an error message on failure.
      */
     public function signUp( string $i_stUserId,
-                            array  $i_rSignUpData = [] ) : string|CredentialsInterface;
+                            array  $i_rSignUpData = [] ) : true|string;
 
 
 }
