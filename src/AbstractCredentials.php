@@ -31,19 +31,4 @@ abstract class AbstractCredentials implements CredentialsInterface {
     }
 
 
-    public function isPublicOrHigher() : bool {
-        return $this->isPublic() || $this->isUserOrHigher();
-    }
-
-
-    public function isUserOrHigher() : bool {
-        return $this->isUser() || $this->isAdminOrHigher();
-    }
-
-
-    public function isAdminOrHigher() : bool {
-        return $this->isAdmin();
-    }
-
-
 }

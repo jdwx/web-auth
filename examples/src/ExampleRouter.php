@@ -4,10 +4,11 @@
 declare( strict_types = 1 );
 
 
+use JDWX\KV\JsonWrapper;
 use JDWX\KV\SqliteKV;
 use JDWX\Web\Framework\Router;
-use JDWX\Web\Login\AuthRoute;
 use JDWX\Web\Login\DummyUserManager;
+use JDWX\Web\Login\Routes\AuthRoute;
 use Routes\ExampleAdminRoute;
 use Routes\ExampleApiRoute;
 use Routes\ExampleLoginRoute;
@@ -21,7 +22,7 @@ class ExampleRouter extends Router {
 
     public function __construct() {
         parent::__construct();
-        $kv = new SqliteKV( __DIR__ . '/../tmp/example.tmp' );
+        $kv = new JsonWrapper( new SqliteKV( __DIR__ . '/../tmp/example.tmp' ) );
         AuthRoute::setManager( new DummyUserManager( $kv ) );
         $this->addRoute( '/', ExamplePublicRoute::class );
         $this->addRoute( '/admin', ExampleAdminRoute::class );

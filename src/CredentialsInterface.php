@@ -62,25 +62,10 @@ interface CredentialsInterface {
     public function getUserIdEx() : string;
 
 
-    public function isAdmin() : bool;
+    public function getLevel() : Level;
 
 
-    public function isAdminOrHigher() : bool;
-
-
-    public function isBanned() : bool;
-
-
-    public function isPublic() : bool;
-
-
-    public function isPublicOrHigher() : bool;
-
-
-    public function isUser() : bool;
-
-
-    public function isUserOrHigher() : bool;
+    public function isLoggedIn() : bool;
 
 
 }

@@ -8,8 +8,12 @@ namespace JDWX\Web\Login;
 
 
 use ArrayAccess;
+use LogicException;
 
 
+/**
+ * Please do not use this class in production.
+ */
 class DummyUserManager extends AbstractUserManager {
 
 
@@ -17,18 +21,21 @@ class DummyUserManager extends AbstractUserManager {
 
 
     /** @param ArrayAccess<string, mixed> $kv */
-    public function __construct( private ArrayAccess $kv ) {}
+    public function __construct( private ArrayAccess $kv ) { }
 
 
-    public function addUser( string $i_stUserId, string $i_stPassword, int $i_uLevel ) : void {
+    public function addUser( string $i_stUserId, string $i_stPassword, Level|int $i_level ) : void {
+        if ( ! $i_level instanceof Level ) {
+            $i_level = Level::from( $i_level );
+        }
         $stUserKey = "user:{$i_stUserId}";
         if ( isset( $this->kv[ $stUserKey ] ) ) {
-            throw new \LogicException( "User already exists: {$i_stUserId}" );
+            throw new LogicException( "User already exists: {$i_stUserId}" );
         }
         $stPasswordHash = password_hash( $i_stPassword, PASSWORD_DEFAULT );
         $this->kv[ $stUserKey ] = [
             'passwordHash' => $stPasswordHash,
-            'level' => $i_uLevel,
+            'level' => $i_level->value,
         ];
     }
 
@@ -66,13 +73,15 @@ class DummyUserManager extends AbstractUserManager {
         if ( ! isset( $this->kv[ $stTokenKey ] ) ) {
             return null;
         }
-        $r = $this->kv[ $stTokenKey ];
-        if ( $r[ 'expires' ] < time() ) {
+        $rToken = $this->kv[ $stTokenKey ];
+        if ( $rToken[ 'expires' ] < time() ) {
             unset( $this->kv[ $stTokenKey ] );
             return null;
         }
-        $stUserKey = "user:{$r[ 'userId' ]}";
-        return new DummyCredentials( $stUserKey, $i_stToken, $r[ 'level' ] );
+        $stUser = $rToken[ 'userId' ];
+        $stUserKey = "user:{$stUser}";
+        $rUser = $this->kv[ $stUserKey ];
+        return new DummyCredentials( $stUserKey, $i_stToken, $rUser[ 'level' ] );
     }
 
 
@@ -84,7 +93,7 @@ class DummyUserManager extends AbstractUserManager {
         if ( ! isset( $i_rSignUpData[ 'password' ] ) ) {
             return 'Password required';
         }
-        $uLevel = $i_rSignUpData[ 'level' ] ?? DummyCredentials::LEVEL_USER;
+        $uLevel = $i_rSignUpData[ 'level' ] ?? Level::USER->value;
         $this->addUser( $i_stUserId, $i_rSignUpData[ 'password' ], $uLevel );
         return true;
     }

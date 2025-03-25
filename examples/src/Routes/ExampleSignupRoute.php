@@ -10,10 +10,10 @@ namespace Routes;
 use ExampleHtmlPage;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\SignupRoute;
+use JDWX\Web\Login\Routes\PublicRoute;
 
 
-class ExampleSignupRoute extends SignupRoute {
+class ExampleSignupRoute extends PublicRoute {
 
 
     private string $stUsername = '';
@@ -31,8 +31,7 @@ class ExampleSignupRoute extends SignupRoute {
             '<label for="error"></label> '
             . '<span id="error" style="color: red;">' . $this->nstError . '</span>'
             . '<br><br>'
-        );
-        $page->addContent( '<form method="post">'
+            . '<form method="post">'
             . '<label for="username">Username:</label> '
             . '<input type="text" id="username" name="username" required value="' . $this->stUsername . '">'
             . '<br>'
@@ -66,7 +65,7 @@ class ExampleSignupRoute extends SignupRoute {
         }
 
         $page = new ExampleHtmlPage( 'Signup' );
-        $page->addContent( 'Signup successful.' );
+        $page->addContent( 'Signup successful. Proceed to login page.' );
         return Response::page( $page );
     }
 

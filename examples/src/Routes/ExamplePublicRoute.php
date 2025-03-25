@@ -10,7 +10,7 @@ namespace Routes;
 use ExampleHtmlPage;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\PublicRoute;
+use JDWX\Web\Login\Routes\PublicRoute;
 
 
 class ExamplePublicRoute extends PublicRoute {
