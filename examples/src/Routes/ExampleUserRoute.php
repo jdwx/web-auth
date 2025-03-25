@@ -17,7 +17,13 @@ class ExampleUserRoute extends UserRoute {
 
 
     protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
-        return Response::page( new ExampleHtmlPage( 'User' ) );
+        $page = new ExampleHtmlPage( 'User' );
+        $page->addContent(
+            '<p>Welcome, ' . $this->findBestUserId() . '.</p>'
+            . '<p><a href="/logout">Logout</a></p>'
+        );
+
+        return Response::page( $page );
     }
 
 

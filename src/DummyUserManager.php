@@ -17,11 +17,11 @@ use LogicException;
 class DummyUserManager extends AbstractUserManager {
 
 
-    private const int TOKEN_LIFETIME = 60;
+    private const int TOKEN_LIFETIME = 600;
 
 
     /** @param ArrayAccess<string, mixed> $kv */
-    public function __construct( private ArrayAccess $kv ) { }
+    public function __construct( private ArrayAccess $kv ) {}
 
 
     public function addUser( string $i_stUserId, string $i_stPassword, Level|int $i_level ) : void {
@@ -81,7 +81,7 @@ class DummyUserManager extends AbstractUserManager {
         $stUser = $rToken[ 'userId' ];
         $stUserKey = "user:{$stUser}";
         $rUser = $this->kv[ $stUserKey ];
-        return new DummyCredentials( $stUserKey, $i_stToken, $rUser[ 'level' ] );
+        return new DummyCredentials( $stUser, $i_stToken, $rUser[ 'level' ] );
     }
 
 
