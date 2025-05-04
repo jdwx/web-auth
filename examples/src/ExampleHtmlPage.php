@@ -23,7 +23,7 @@ class ExampleHtmlPage extends SimpleHtmlPage {
     public function __construct( private readonly string $stWhich ) {
         parent::__construct();
         $this->setTitle( "Example Page - {$stWhich}" );
-        $this->addCSS( '/css/example.css' );
+        $this->addCssUri( '/css/example.css' );
     }
 
 
@@ -40,8 +40,10 @@ class ExampleHtmlPage extends SimpleHtmlPage {
         return $st;
     }
 
+
     protected function suffix() : string {
         return '</main>';
     }
+
 
 }
