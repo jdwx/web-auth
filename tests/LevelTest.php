@@ -24,12 +24,25 @@ final class LevelTest extends TestCase {
     }
 
 
+    public function testIsAbove() : void {
+        $level = Level::USER;
+        self::assertFalse( $level->isAbove( Level::USER ) );
+        self::assertTrue( $level->isAbove( Level::PUBLIC ) );
+        self::assertFalse( $level->isAbove( Level::ADMIN ) );
+        self::assertTrue( $level->isAbove( 4999 ) );
+        self::assertFalse( $level->isAbove( 5000 ) );
+        self::assertTrue( $level->isAbove( 0 ) );
+        self::assertFalse( $level->isAbove( 9001 ) );
+    }
+
+
     public function testIsAtLeast() : void {
         $level = Level::USER;
         self::assertTrue( $level->isAtLeast( Level::USER ) );
         self::assertTrue( $level->isAtLeast( Level::PUBLIC ) );
         self::assertFalse( $level->isAtLeast( Level::ADMIN ) );
         self::assertTrue( $level->isAtLeast( 5000 ) );
+        self::assertFalse( $level->isAtLeast( 5001 ) );
         self::assertTrue( $level->isAtLeast( 0 ) );
         self::assertFalse( $level->isAtLeast( 9001 ) );
     }
