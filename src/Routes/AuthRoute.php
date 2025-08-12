@@ -127,10 +127,9 @@ class AuthRoute extends AbstractRoute {
         if ( $i_stPath ) {
             $stWhere .= "({$i_stPath})";
         }
-        $this->logger()->warning(
-            "Forbidden {$stMethod} by {$stUserId} to {$stWhere} (has {$stHas} needs {$stNeeds})"
-        );
-        throw new ForbiddenException();
+        $stMessage = "Forbidden {$stMethod} by {$stUserId} to {$stWhere} (has {$stHas} needs {$stNeeds})";
+        $this->logger()->warning( $stMessage );
+        throw new ForbiddenException( $stMessage );
     }
 
 
@@ -216,7 +215,7 @@ class AuthRoute extends AbstractRoute {
         assert( $router instanceof RouterInterface );
         return $router;
     }
-    
+
 
     protected function saveToken() : void {
         if ( ! is_string( $this->nstToken ) ) {
