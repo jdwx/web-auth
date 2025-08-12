@@ -1,5 +1,5 @@
 {
-  "name": "jdwx/web-login",
+  "name": "jdwx/web-auth",
   "license": "MIT",
   "autoload": {
     "psr-4": {
