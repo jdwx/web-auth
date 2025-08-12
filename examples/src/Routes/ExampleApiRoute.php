@@ -7,9 +7,9 @@ declare( strict_types = 1 );
 namespace Routes;
 
 
+use JDWX\Web\Auth\Routes\AuthRoute;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\Routes\AuthRoute;
 
 
 class ExampleApiRoute extends AuthRoute {

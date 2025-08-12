@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login\Routes;
+namespace JDWX\Web\Auth\Routes;
 
 
 class ApiRoute extends AuthRoute {

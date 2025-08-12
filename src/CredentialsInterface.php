@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login;
+namespace JDWX\Web\Auth;
 
 
 interface CredentialsInterface {
@@ -29,6 +29,7 @@ interface CredentialsInterface {
      */
     public function getExpirationTime() : int;
 
+    public function getLevel() : Level;
 
     /**
      * @return string|null The session token, or null if not available.
@@ -37,14 +38,12 @@ interface CredentialsInterface {
      */
     public function getToken() : ?string;
 
-
     /**
      * @return string The session token.
      *
      * Used when the token is expected (or required) to be present.
      */
     public function getTokenEx() : string;
-
 
     /**
      * @return string|null The user ID, or null if not available.
@@ -53,17 +52,12 @@ interface CredentialsInterface {
      */
     public function getUserId() : ?string;
 
-
     /**
      * @return string The user ID.
      *
      * Used when the user ID is expected (or required) to be present.
      */
     public function getUserIdEx() : string;
-
-
-    public function getLevel() : Level;
-
 
     public function isLoggedIn() : bool;
 

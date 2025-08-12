@@ -4,17 +4,17 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login\Routes;
+namespace JDWX\Web\Auth\Routes;
 
 
+use JDWX\Web\Auth\CredentialsInterface;
+use JDWX\Web\Auth\Level;
+use JDWX\Web\Auth\RouterInterface;
+use JDWX\Web\Auth\RouteTag;
+use JDWX\Web\Auth\UserManagerInterface;
 use JDWX\Web\Framework\AbstractRoute;
 use JDWX\Web\Framework\Exceptions\ForbiddenException;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\CredentialsInterface;
-use JDWX\Web\Login\Level;
-use JDWX\Web\Login\RouterInterface;
-use JDWX\Web\Login\RouteTag;
-use JDWX\Web\Login\UserManagerInterface;
 use JDWX\Web\Session;
 use LogicException;
 use RuntimeException;

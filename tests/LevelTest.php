@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-use JDWX\Web\Login\Level;
+use JDWX\Web\Auth\Level;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

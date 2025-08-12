@@ -6,10 +6,10 @@ declare( strict_types = 1 );
 
 use JDWX\KV\JsonWrapper;
 use JDWX\KV\SqliteKV;
-use JDWX\Web\Login\DummyUserManager;
-use JDWX\Web\Login\Router;
-use JDWX\Web\Login\Routes\AuthRoute;
-use JDWX\Web\Login\RouteTag;
+use JDWX\Web\Auth\DummyUserManager;
+use JDWX\Web\Auth\Router;
+use JDWX\Web\Auth\Routes\AuthRoute;
+use JDWX\Web\Auth\RouteTag;
 use Routes\ExampleAdminRoute;
 use Routes\ExampleApiRoute;
 use Routes\ExampleLoginRoute;

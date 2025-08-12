@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-use JDWX\Web\Login\AbstractUserManager;
+use JDWX\Web\Auth\AbstractUserManager;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Shims\MyUserManager;

@@ -4,9 +4,9 @@
 declare( strict_types = 1 );
 
 
-use JDWX\Web\Login\Router;
-use JDWX\Web\Login\Routes\AuthRoute;
-use JDWX\Web\Login\RouteTag;
+use JDWX\Web\Auth\Router;
+use JDWX\Web\Auth\Routes\AuthRoute;
+use JDWX\Web\Auth\RouteTag;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 

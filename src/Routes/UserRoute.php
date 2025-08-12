@@ -4,13 +4,13 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login\Routes;
+namespace JDWX\Web\Auth\Routes;
 
 
+use JDWX\Web\Auth\Level;
+use JDWX\Web\Auth\RouteTag;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\Level;
-use JDWX\Web\Login\RouteTag;
 
 
 class UserRoute extends AuthRoute {

@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login;
+namespace JDWX\Web\Auth;
 
 
 abstract class AbstractUserManager implements UserManagerInterface {

@@ -8,9 +8,9 @@ namespace Routes;
 
 
 use ExampleHtmlPage;
+use JDWX\Web\Auth\Routes\UserRoute;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\Routes\UserRoute;
 
 
 class ExampleUserRoute extends UserRoute {

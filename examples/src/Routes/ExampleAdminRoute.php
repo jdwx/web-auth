@@ -8,9 +8,9 @@ namespace Routes;
 
 
 use ExampleHtmlPage;
+use JDWX\Web\Auth\Routes\AdminRoute;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\Login\Routes\AdminRoute;
 
 
 class ExampleAdminRoute extends AdminRoute {

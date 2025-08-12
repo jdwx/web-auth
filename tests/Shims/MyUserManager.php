@@ -7,8 +7,8 @@ declare( strict_types = 1 );
 namespace Shims;
 
 
-use JDWX\Web\Login\AbstractUserManager;
-use JDWX\Web\Login\CredentialsInterface;
+use JDWX\Web\Auth\AbstractUserManager;
+use JDWX\Web\Auth\CredentialsInterface;
 
 
 class MyUserManager extends AbstractUserManager {

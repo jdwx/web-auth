@@ -3,7 +3,7 @@
   "license": "MIT",
   "autoload": {
     "psr-4": {
-      "JDWX\\Web\\Login\\": "src/"
+      "JDWX\\Web\\Auth\\": "src/"
     }
   },
   "require": {

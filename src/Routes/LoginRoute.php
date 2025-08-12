@@ -4,10 +4,10 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login\Routes;
+namespace JDWX\Web\Auth\Routes;
 
 
-use JDWX\Web\Login\Level;
+use JDWX\Web\Auth\Level;
 
 
 class LoginRoute extends AuthRoute {

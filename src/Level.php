@@ -4,19 +4,19 @@
 declare( strict_types = 1 );
 
 
-namespace JDWX\Web\Login;
+namespace JDWX\Web\Auth;
 
 
 enum Level: int {
 
 
-    case BANNED = -1000;
+    case BANNED     = -1000;
 
-    case PUBLIC = 0;
+    case PUBLIC     = 0;
 
-    case USER = 5000;
+    case USER       = 5000;
 
-    case ADMIN = 9001;
+    case ADMIN      = 9001;
 
     case IMPOSSIBLE = 100_000_000;
 
