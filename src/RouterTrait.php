@@ -22,6 +22,8 @@ trait RouterTrait {
     }
 
 
+    /** @suppress PhanTraitParentReference */
+    #[\Override]
     protected function addRoute( string $i_stUri, RouteInterface|string $i_route, ?RouteTag $i_tag = null ) : void {
         parent::addRoute( $i_stUri, $i_route );
         if ( $i_tag ) {
