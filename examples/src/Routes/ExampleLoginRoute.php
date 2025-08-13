@@ -21,7 +21,7 @@ class ExampleLoginRoute extends PublicRoute {
     private string $stUsername = '';
 
 
-    protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handleGET( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         if ( $this->isLoggedIn() ) {
             return $this->respondAlreadyLoggedIn();
         }
@@ -29,7 +29,7 @@ class ExampleLoginRoute extends PublicRoute {
     }
 
 
-    protected function handlePOST( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handlePOST( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         $this->stUsername = $this->request()->postEx( 'username' )->asString();
         $rAuthData = [
             'password' => $this->request()->postEx( 'password' )->asString(),
@@ -37,7 +37,7 @@ class ExampleLoginRoute extends PublicRoute {
         $cred = $this->tryLogin( $this->stUsername, $rAuthData );
         if ( is_string( $cred ) ) {
             $this->stError = $cred;
-            return $this->handleGET( $i_stUri, $i_stPath );
+            return $this->handleGET( $i_stUri, $i_stPath, $i_rUriParameters );
         }
         return Response::redirectTemporaryWithGet( '/user' );
     }

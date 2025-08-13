@@ -16,7 +16,7 @@ use JDWX\Web\Framework\ResponseInterface;
 class ExampleUserRoute extends UserRoute {
 
 
-    protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handleGET( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         $page = new ExampleHtmlPage( 'User' );
         $page->addContent(
             '<p>Welcome, ' . $this->findBestUserId() . '.</p>'

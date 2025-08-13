@@ -16,7 +16,7 @@ use JDWX\Web\Framework\ResponseInterface;
 class ExamplePublicRoute extends PublicRoute {
 
 
-    protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handleGET( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         return Response::page( new ExampleHtmlPage( 'Public' ) );
     }
 

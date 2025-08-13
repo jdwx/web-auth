@@ -11,7 +11,7 @@ use ExampleHtmlPage;
 use JDWX\Web\Auth\Routes\PublicRoute;
 use JDWX\Web\Framework\Response;
 use JDWX\Web\Framework\ResponseInterface;
-use JDWX\Web\PageInterface;
+use JDWX\Web\Pages\PageInterface;
 
 
 class ExampleSignupRoute extends PublicRoute {
@@ -24,7 +24,7 @@ class ExampleSignupRoute extends PublicRoute {
     private ?string $nstError = null;
 
 
-    protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handleGET( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         $page = $this->isLoggedIn()
             ? $this->respondAlreadyLoggedIn()
             : $this->respondSignupForm();
@@ -32,7 +32,7 @@ class ExampleSignupRoute extends PublicRoute {
     }
 
 
-    protected function handlePOST( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handlePOST( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         $this->stUsername = $this->request()->postEx( 'username' )->asString();
         $rAuthData = [
             'password' => $this->request()->postEx( 'password' )->asString(),
@@ -40,7 +40,7 @@ class ExampleSignupRoute extends PublicRoute {
         $bst = $this->managerEx()->signUp( $this->stUsername, $rAuthData );
         if ( is_string( $bst ) ) {
             $this->nstError = $bst;
-            return $this->handleGET( $i_stUri, $i_stPath );
+            return $this->handleGET( $i_stUri, $i_stPath, $i_rUriParameters );
         }
 
         $page = new ExampleHtmlPage( 'Signup' );

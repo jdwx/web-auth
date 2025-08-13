@@ -17,7 +17,7 @@ use JDWX\Web\Framework\ResponseInterface;
 class ExampleLogoutRoute extends PublicRoute {
 
 
-    protected function handleGET( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    protected function handleGET( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         $page = new ExampleHtmlPage( 'Logout' );
         if ( $this->isLoggedIn() ) {
             $this->managerEx()->logOut( $this->getTokenEx() );

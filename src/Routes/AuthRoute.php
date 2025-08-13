@@ -35,7 +35,8 @@ class AuthRoute extends AbstractRoute {
     private ?string $nstToken = null;
 
 
-    public function __construct( RouterInterface $i_router ) {
+    public function __construct( \JDWX\Web\Framework\RouterInterface $i_router ) {
+        assert( $i_router instanceof RouterInterface );
         parent::__construct( $i_router );
         if ( Session::cookieInRequest( $this->request() ) ) {
             $this->startSession();
@@ -59,14 +60,14 @@ class AuthRoute extends AbstractRoute {
     }
 
 
-    public function handle( string $i_stUri, string $i_stPath ) : ?ResponseInterface {
+    public function handle( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         if ( $this->getLevel()->isBelow( static::REQUIRED_LEVEL ) ) {
             $this->forbidden( $i_stUri, $i_stPath );
         }
         if ( ! $this->aaa( $this->method(), $i_stUri, $i_stPath ) ) {
             $this->forbidden( $i_stUri, $i_stPath );
         }
-        return parent::handle( $i_stUri, $i_stPath );
+        return parent::handle( $i_stUri, $i_stPath, $i_rUriParameters );
     }
 
 

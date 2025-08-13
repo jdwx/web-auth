@@ -4,7 +4,7 @@
 declare( strict_types = 1 );
 
 
-use JDWX\Web\SimpleHtmlPage;
+use JDWX\Web\Pages\SimpleHtmlPage;
 
 
 class ExampleHtmlPage extends SimpleHtmlPage {
