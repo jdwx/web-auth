@@ -62,10 +62,10 @@ class AuthRoute extends AbstractRoute {
 
     public function handle( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         if ( $this->getLevel()->isBelow( static::REQUIRED_LEVEL ) ) {
-            $this->forbidden( $i_stUri, $i_stPath );
+            return $this->forbidden( $i_stUri, $i_stPath, $i_rUriParameters );
         }
         if ( ! $this->aaa( $this->method(), $i_stUri, $i_stPath ) ) {
-            $this->forbidden( $i_stUri, $i_stPath );
+            return $this->forbidden( $i_stUri, $i_stPath, $i_rUriParameters );
         }
         return parent::handle( $i_stUri, $i_stPath, $i_rUriParameters );
     }
@@ -119,7 +119,10 @@ class AuthRoute extends AbstractRoute {
     }
 
 
-    protected function forbidden( string $i_stUri, string $i_stPath ) : never {
+    /**
+     * @param array<string, list<string>|string> $i_rUriParameters
+     */
+    protected function forbidden( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
         $stUserId = $this->findBestUserId();
         $stHas = $this->getLevel()->name;
         $stNeeds = static::REQUIRED_LEVEL->name;
