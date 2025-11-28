@@ -26,6 +26,7 @@ class DummyUserManager extends AbstractUserManager {
 
     public function addUser( string $i_stUserId, string $i_stPassword, Level|int $i_level ) : void {
         if ( ! $i_level instanceof Level ) {
+            /** @noinspection CallableParameterUseCaseInTypeContextInspection */
             $i_level = Level::from( $i_level );
         }
         $stUserKey = "user:{$i_stUserId}";
