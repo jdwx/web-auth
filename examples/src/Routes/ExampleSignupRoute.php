@@ -36,6 +36,7 @@ class ExampleSignupRoute extends PublicRoute {
         $this->stUsername = $this->request()->postEx( 'username' )->asString();
         $rAuthData = [
             'password' => $this->request()->postEx( 'password' )->asString(),
+            'level' => $this->request()->postEx( 'level' )->asString(),
         ];
         $bst = $this->managerEx()->signUp( $this->stUsername, $rAuthData );
         if ( is_string( $bst ) ) {

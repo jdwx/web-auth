@@ -94,7 +94,16 @@ class DummyUserManager extends AbstractUserManager {
         if ( ! isset( $i_rSignUpData[ 'password' ] ) ) {
             return 'Password required';
         }
-        $uLevel = intval( $i_rSignUpData[ 'level' ] ?? Level::USER->value );
+        assert( is_string( $i_rSignUpData[ 'password' ] ) );
+        if ( isset( $i_rSignUpData[ 'level' ] ) ) {
+            if ( is_numeric( $i_rSignUpData[ 'level' ] ) ) {
+                $uLevel = Level::from( intval( $i_rSignUpData ) );
+            } else {
+                $uLevel = Level::fromName( $i_rSignUpData[ 'level' ] );
+            }
+        } else {
+            $uLevel = Level::USER;
+        }
         $this->addUser( $i_stUserId, $i_rSignUpData[ 'password' ], $uLevel );
         return true;
     }

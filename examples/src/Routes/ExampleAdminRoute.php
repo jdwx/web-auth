@@ -17,7 +17,7 @@ class ExampleAdminRoute extends AdminRoute {
 
 
     protected function handleGET( string $i_stUri, string $i_stPath, array $i_rUriParameters ) : ?ResponseInterface {
-        return Response::page( new ExampleHtmlPage( 'Admin' ) );
+        return Response::page( ( new ExampleHtmlPage( 'Admin' ) )->addContent( 'This is an admin page.' ) );
     }
 
 
