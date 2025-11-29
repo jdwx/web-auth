@@ -21,11 +21,32 @@ enum Level: int {
     case IMPOSSIBLE = 100_000_000;
 
 
+    public static function fromName( string $i_stName ) : self {
+        $level = self::tryFromName( $i_stName );
+        if ( $level instanceof self ) {
+            return $level;
+        }
+        throw new \InvalidArgumentException( "Invalid level name: {$i_stName}" );
+    }
+
+
+    public static function tryFromName( string $i_stName ) : ?self {
+        return match ( strtolower( trim( $i_stName ) ) ) {
+            'banned' => self::BANNED,
+            'public' => self::PUBLIC,
+            'user' => self::USER,
+            'admin' => self::ADMIN,
+            'impossible' => self::IMPOSSIBLE,
+            default => null,
+        };
+    }
+
+
     public function is( Level|int $i_levelCheck ) : bool {
         if ( is_int( $i_levelCheck ) ) {
-            return $this->value == $i_levelCheck;
+            return $this->value === $i_levelCheck;
         }
-        return $this == $i_levelCheck;
+        return $this === $i_levelCheck;
     }
 
 
