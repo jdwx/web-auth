@@ -8,11 +8,19 @@
   },
   "require": {
     "php": ">=8.3.0",
-    "jdwx/web": "^2.1.13"
+    "jdwx/web-framework": "^1.0"
   },
   "require-dev": {
     "jdwx/kv": "^1.0",
     "jetbrains/phpstorm-attributes": "^1.0",
-    "phpunit/phpunit": "^10"
+    "phan/phan": "^v5",
+    "phpstan/phpstan": "^2.0",
+    "phpunit/phpunit": "^12"
+  },
+  "scripts": {
+    "phan": "PHAN_ALLOW_XDEBUG=1 php -d xdebug.mode=off vendor/bin/phan --no-progress-bar -S --analyze-twice",
+    "phpstan": "php -d xdebug.so vendor/bin/phpstan --no-progress",
+    "test": "vendor/bin/phpunit tests"
   }
+
 }
