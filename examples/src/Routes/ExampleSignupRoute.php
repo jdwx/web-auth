@@ -53,7 +53,7 @@ class ExampleSignupRoute extends PublicRoute {
         $page = new ExampleHtmlPage( 'Signup' );
         $page->addContent(
             '<p>You are already logged in.</p>'
-            . '<p><a href="/user">Go to user page</a></p>'
+            . '<p><a href="/user">Go to User page</a></p>'
         );
         return $page;
     }
